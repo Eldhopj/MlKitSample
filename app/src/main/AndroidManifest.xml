@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.eldhopj.mlkitsample">
+
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -8,7 +11,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,16 +21,17 @@
             </intent-filter>
         </activity>
 
+        <!-- barcode meta-data -->
+        <!--label Images meta-data-->
         <!-- To use multiple models: android:value="barcode,model2,model3" -->
-        <!-- Barcode meta-data -->
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
-            android:value="barcode" />
+            android:value="barcode,label" />
 
-        <activity android:name=".BarcodeScannerActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+        <activity
+            android:name=".BarcodeScannerActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ImageLabelingActivity"></activity>
     </application>
 
 </manifest>

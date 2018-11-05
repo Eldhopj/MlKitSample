@@ -3,6 +3,7 @@ package com.eldhopj.mlkitsample;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.eldhopj.mlkitsample.Overlays.GraphicOverlay;
+import com.eldhopj.mlkitsample.Overlays.ReactOverlay;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -28,12 +31,12 @@ import com.wonderkiln.camerakit.CameraView;
 import java.util.Arrays;
 import java.util.List;
 
-/**Add classpath and dependencies */
 public class BarcodeScannerActivity extends AppCompatActivity {
 
     private static final String TAG = "BarcodeScannerActivity";
 
     CameraView cameraView;
+    GraphicOverlay graphicOverlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_barcode_scanner);
 
         cameraView = findViewById(R.id.camera);
+        graphicOverlay = findViewById(R.id.graphicOverflow);
 
         cameraKit();
     }
@@ -60,6 +64,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     public void captureBarcode(View view) {
         cameraView.start();
         cameraView.captureImage();
+        graphicOverlay.clear();
     }
 
 
@@ -81,8 +86,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                 Bitmap  bitmap = cameraKitImage.getBitmap();
                 bitmap = Bitmap.createScaledBitmap(bitmap,cameraView.getWidth(),cameraView.getHeight(),false);
                 cameraView.stop();
-
-                Log.d(TAG, "onImage: "+bitmap.toString());
 
                 runDetector(bitmap);
             }
@@ -126,6 +129,12 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
     private void processResult(List<FirebaseVisionBarcode> firebaseVisionBarcodes) {
         for (FirebaseVisionBarcode barcode : firebaseVisionBarcodes){
+
+            //Draw Rect
+            Rect rectBounds = barcode.getBoundingBox();
+            ReactOverlay reactOverlay = new ReactOverlay(graphicOverlay,rectBounds);
+            graphicOverlay.add(reactOverlay);
+
             int valueType = barcode.getValueType();
             switch (valueType){
 
