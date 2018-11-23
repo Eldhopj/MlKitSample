@@ -25,19 +25,14 @@
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/barcodeImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/camera_view"
+        app:layout_constraintStart_toStartOf="@id/camera_view"
+        app:layout_constraintTop_toTopOf="@id/camera_view" />
 
-    <com.wonderkiln.camerakit.CameraView
-        android:id="@+id/camera"
+    <io.fotoapparat.view.CameraView
+        android:id="@+id/camera_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:adjustViewBounds="true"
-        android:keepScreenOn="true"
         app:layout_constraintBottom_toTopOf="@+id/barcodeImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

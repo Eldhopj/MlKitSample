@@ -8,6 +8,7 @@ import android.graphics.RectF;
 
 public class ReactOverlay extends GraphicOverlay.Graphic {
 
+    private static final String TAG = "ReactOverlay";
 
     private static final int RECT_COLOR = Color.YELLOW;
     private static final float STROKE_WIDTH= 8.0f;
@@ -29,6 +30,7 @@ public class ReactOverlay extends GraphicOverlay.Graphic {
     public void draw(Canvas canvas) {
         if (bounds == null){
             throw new IllegalStateException("Attempting to draw null bounds");
+
         }
         RectF rectF = new RectF(bounds);
         canvas.drawRect(rectF,reactPaint);
